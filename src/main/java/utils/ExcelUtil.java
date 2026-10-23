@@ -13,7 +13,7 @@ import java.util.Map;
 
 public class ExcelUtil {
 
-    private static final String FILE_PATH = System.getProperty("user.dir") + "src/main/resources/TestData/TestData.xlsx";
+    private static final String FILE_PATH = System.getProperty("user.dir") + "/src/main/resources/TestData/TestData.xlsx";
 
     private static final String SHEET_NAME = "TestData";
 

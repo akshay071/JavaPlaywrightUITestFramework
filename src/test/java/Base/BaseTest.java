@@ -7,6 +7,7 @@ import org.testng.annotations.BeforeClass;
 import pages.LoginPage;
 import utils.ConfingReader;
 
+import java.nio.file.Paths;
 import java.util.Properties;
 
 import static com.microsoft.playwright.assertions.PlaywrightAssertions.assertThat;
@@ -24,6 +25,7 @@ public class BaseTest {
         browser = playwright.chromium().launch(new BrowserType.LaunchOptions().setHeadless(headless));
 
         context = browser.newContext();
+        context.tracing().start(new Tracing.StartOptions().setScreenshots(true).setSnapshots(true).setSources(true));
         page = context.newPage();
 
         page.navigate(ConfingReader.get("baseUrl"));
@@ -52,6 +54,9 @@ public class BaseTest {
     @AfterClass(alwaysRun = true)
     public void tearDown(){
 
+
+        context.tracing().stop(new Tracing.StopOptions().setPath(Paths.get("trace.zip")));
+
         if(context != null){
             context.close();
         }
@@ -63,5 +68,6 @@ public class BaseTest {
         if(playwright != null){
             playwright.close();
         }
+
     }
 }
